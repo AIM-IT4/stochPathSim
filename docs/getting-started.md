@@ -3,8 +3,8 @@
 ## Installation
 
 ```bash
-pip install stochPathSim            # numpy, scipy, pandas
-pip install "stochPathSim[plot]"    # adds matplotlib
+pip install stochPathSim              # numpy, scipy, pandas, plotly
+pip install "stochPathSim[export]"    # adds kaleido for static PNG/SVG export
 ```
 
 ## Simulate, inspect, price
@@ -22,7 +22,9 @@ paths["spot"].shape           # (50000, 253): column 0 is the initial value
 paths.terminal()              # values of the primary state at T
 paths.quantile([0.01, 0.99])  # quantile bands at every time
 paths.to_frame(max_paths=5)   # pandas DataFrame indexed by time
-paths.plot()                  # sample paths, mean and 1%-99% band
+paths.plot()                  # interactive Plotly chart: paths, mean and 1%-99% band
+paths.fan()                   # nested quantile bands
+paths.distribution(0.5)       # histogram of the values at t = 0.5
 ```
 
 Common options:

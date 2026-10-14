@@ -9,6 +9,7 @@ from .black_scholes import (
     bs_price,
 )
 from .heston import heston_char_func, heston_price
+from .kou import kou_char_func, kou_price
 from .merton import merton_price
 from .rates import (
     cir_zcb,
@@ -32,6 +33,8 @@ __all__ = [
     "heston_price",
     "heston_char_func",
     "merton_price",
+    "kou_price",
+    "kou_char_func",
     "sabr_implied_vol",
     "vasicek_zcb",
     "vasicek_zcb_option",

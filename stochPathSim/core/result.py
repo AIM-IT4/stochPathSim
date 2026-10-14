@@ -81,11 +81,26 @@ class SimulationResult:
         return pd.DataFrame(p.T, index=pd.Index(self.times, name="time"),
                             columns=[f"path_{i}" for i in range(p.shape[0])])
 
-    def plot(self, name: str | None = None, n_paths: int = 20, ax=None, **kwargs):
-        """Plot a sample of paths with the mean and the 1%-99% quantile band."""
-        from .. import plotting
+    def plot(self, name: str | None = None, n_paths: int = 30, ax=None, **kwargs):
+        """Interactive Plotly chart of sample paths, the mean and the 1%-99% band.
 
-        return plotting.plot_paths(self, name=name, n_paths=n_paths, ax=ax, **kwargs)
+        ``ax`` is accepted for backward compatibility and ignored.
+        """
+        from .. import viz
+
+        return viz.paths(self, name=name, n_paths=n_paths, **kwargs)
+
+    def fan(self, name: str | None = None, **kwargs):
+        """Interactive fan chart of nested quantile bands."""
+        from .. import viz
+
+        return viz.fan(self, name=name, **kwargs)
+
+    def distribution(self, t: float | None = None, name: str | None = None, **kwargs):
+        """Interactive histogram of the values at time ``t`` (default: the horizon)."""
+        from .. import viz
+
+        return viz.terminal_distribution(self, name=name, t=t, **kwargs)
 
     def __repr__(self) -> str:
         return (f"SimulationResult(names={self.names}, n_paths={self.n_paths}, "

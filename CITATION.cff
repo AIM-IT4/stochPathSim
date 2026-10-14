@@ -8,7 +8,7 @@ authors:
     email: jha.8@alumni.iitj.ac.in
 repository-code: "https://github.com/AIM-IT4/stochPathSim"
 license: MIT
-version: 2.0.0
+version: 2.1.0
 date-released: 2026-10-14
 keywords:
   - quantitative finance

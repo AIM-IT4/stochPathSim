@@ -2,6 +2,27 @@
 
 All notable changes to this project are documented here. The project follows [Semantic Versioning](https://semver.org).
 
+## [2.1.0] - 2026-10-14
+
+### Added
+- **Validation lab (`stochPathSim.validation`):**
+  - `convergence_study` and `discretisation_study`, which estimates the weak order.
+  - `compare_models`.
+  - `ValidationReport`, which writes self-contained interactive HTML reports with pass/fail checks.
+- **Interactive Plotly charts (`stochPathSim.viz`):**
+  - Paths, fan charts, a path explorer, terminal distributions and density evolution (heatmap, surface or animation).
+  - Correlation heatmaps, exposure and backtest dashboards, VaR plots, and curve-fit checks.
+  - Light and dark themes.
+- **New models:**
+  - `RoughBergomi`, `KouJumpDiffusion`, `RegimeSwitchingGBM`, `SchwartzOneFactor` and `SchwartzSmith`.
+  - `ConstantIntensity` and `CIRIntensity`, with default-time sampling.
+- **Analytics:** `kou_price` and `kou_char_func`.
+- **Results:** `SimulationResult.fan()` and `SimulationResult.distribution(t)`.
+
+### Changed
+- Charts use Plotly instead of matplotlib, and plotly is now a core dependency. `plot_paths`, `plot_fan`, `plot_exposure`, `SimulationResult.plot` and the 1.x `plot_simulation` return Plotly figures. The `ax` argument is accepted and ignored.
+- The `plot` extra is kept empty for compatibility. A new `export` extra installs kaleido for static image export.
+
 ## [2.0.0] - 2026-10-14
 
 A rewrite into a validated simulation, pricing and risk library. The 1.x interface keeps working.
@@ -41,7 +62,7 @@ A rewrite into a validated simulation, pricing and risk library. The 1.x interfa
 - **Dependencies:** `scipy` is now declared, and the 1.x tests (which imported a package that no longer existed) are replaced.
 
 ### Changed
-- Python 3.10+ is required. matplotlib is optional (`pip install "stochPathSim[plot]"`).
+- Python 3.10+ is required.
 - 1.x classes accept an optional `seed` and use NumPy's `Generator` instead of the global random state.
 
 ## [1.1.1] - 2024-12-15

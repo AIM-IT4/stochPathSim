@@ -73,10 +73,6 @@ def test_statistics_utils(capsys):
 
 
 def test_plot_simulation_is_not_interactive():
-    pytest.importorskip("matplotlib")
-    import matplotlib
-
-    matplotlib.use("Agg")
     t, s = GeometricBrownianMotion(mu=0.0, sigma=0.2, s0=100, T=1, n=11, paths=30, seed=8).simulate()
-    ax = plot_simulation(t, s, num_paths=5)
-    assert len(ax.lines) == 5
+    fig = plot_simulation(t, s, num_paths=5)
+    assert len(fig.data) == 5

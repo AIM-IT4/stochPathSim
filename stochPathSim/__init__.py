@@ -5,7 +5,7 @@
 ...     T=1.0, n_steps=252, n_paths=10_000, seed=42)
 """
 
-from . import analytics, calibration, core, pricing, processes, risk
+from . import analytics, calibration, core, pricing, processes, risk, validation, viz
 from ._version import __version__
 from .core import SimulationResult, StochasticProcess, TimeGrid
 from .curves import ZeroCurve
@@ -17,13 +17,20 @@ from .processes import (
     Bates,
     BlackDermanToy,
     BlackKarasinski,
+    CIRIntensity,
+    ConstantIntensity,
     G2pp,
     Heston,
     HoLee,
     HullWhite,
+    KouJumpDiffusion,
     MertonJumpDiffusion,
     MultiAssetGBM,
     OrnsteinUhlenbeck,
+    RegimeSwitchingGBM,
+    RoughBergomi,
+    SchwartzOneFactor,
+    SchwartzSmith,
     VarianceGamma,
     Vasicek,
 )
@@ -36,6 +43,8 @@ __all__ = [
     "pricing",
     "processes",
     "risk",
+    "validation",
+    "viz",
     "TimeGrid",
     "SimulationResult",
     "StochasticProcess",
@@ -56,4 +65,11 @@ __all__ = [
     "G2pp",
     "BlackKarasinski",
     "BlackDermanToy",
+    "RoughBergomi",
+    "KouJumpDiffusion",
+    "RegimeSwitchingGBM",
+    "SchwartzOneFactor",
+    "SchwartzSmith",
+    "ConstantIntensity",
+    "CIRIntensity",
 ]

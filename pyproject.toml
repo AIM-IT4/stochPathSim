@@ -15,6 +15,7 @@ dependencies = [
     "numpy>=1.24",
     "scipy>=1.10",
     "pandas>=1.5",
+    "plotly>=5.15",
 ]
 keywords = [
     "quantitative-finance", "monte-carlo", "stochastic-processes", "derivatives-pricing",
@@ -35,8 +36,10 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-plot = ["matplotlib>=3.6"]
-dev = ["pytest>=7", "pytest-cov>=4", "ruff>=0.5", "matplotlib>=3.6"]
+# kept so that `pip install stochPathSim[plot]` still works; plotly is now a core dependency
+plot = []
+export = ["kaleido>=0.2"]
+dev = ["pytest>=7", "pytest-cov>=4", "ruff>=0.5"]
 docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9", "mkdocstrings[python]>=0.24"]
 
 [project.urls]

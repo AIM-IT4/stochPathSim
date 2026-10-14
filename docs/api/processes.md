@@ -11,6 +11,19 @@
 ::: stochPathSim.processes.CEV
 ::: stochPathSim.processes.VarianceGamma
 ::: stochPathSim.processes.OrnsteinUhlenbeck
+::: stochPathSim.processes.RoughBergomi
+::: stochPathSim.processes.KouJumpDiffusion
+::: stochPathSim.processes.RegimeSwitchingGBM
+
+## Commodities
+
+::: stochPathSim.processes.SchwartzOneFactor
+::: stochPathSim.processes.SchwartzSmith
+
+## Credit
+
+::: stochPathSim.processes.ConstantIntensity
+::: stochPathSim.processes.CIRIntensity
 
 ## Interest rates
 

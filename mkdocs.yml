@@ -51,6 +51,8 @@ nav:
       - Pricing derivatives: guide/pricing.md
       - Exposure and CVA: guide/exposure.md
       - Backtesting risk-factor models: guide/backtesting.md
+      - Validation lab: guide/validation.md
+      - Interactive charts: guide/visualisation.md
   - API reference:
       - Core: api/core.md
       - Processes: api/processes.md
@@ -58,4 +60,6 @@ nav:
       - Pricing: api/pricing.md
       - Risk: api/risk.md
       - Calibration: api/calibration.md
+      - Validation: api/validation.md
+      - Charts: api/viz.md
   - Changelog: changelog.md

@@ -48,17 +48,17 @@ def display_statistics(stats_df, time):
 
 def plot_simulation(time, simulations, num_paths=10, title="Simulation Paths",
                     xlabel="Time (Years)", ylabel="Value", ax=None):
-    """Plot up to ``num_paths`` simulated paths and return the matplotlib Axes."""
-    from .plotting import _pyplot
+    """Plot up to ``num_paths`` simulated paths; return an interactive Plotly figure.
 
-    plt = _pyplot()
-    if ax is None:
-        _, ax = plt.subplots(figsize=(12, 6))
+    ``ax`` is accepted for backward compatibility and ignored.
+    """
+    import plotly.graph_objects as go
+
+    from .viz.theme import new_figure
+
+    fig = new_figure(title, xlabel, ylabel)
     simulations = np.asarray(simulations)
     for i in range(min(int(num_paths), simulations.shape[0])):
-        ax.plot(time, simulations[i], lw=1, alpha=0.7)
-    ax.set_title(title, fontsize=14)
-    ax.set_xlabel(xlabel, fontsize=12)
-    ax.set_ylabel(ylabel, fontsize=12)
-    ax.grid(True, linestyle="--", alpha=0.6)
-    return ax
+        fig.add_trace(go.Scatter(x=time, y=simulations[i], mode="lines", line=dict(width=1),
+                                 opacity=0.7, name=f"path {i}", showlegend=False))
+    return fig

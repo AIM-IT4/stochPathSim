@@ -2,9 +2,11 @@
 
 **Stochastic path simulation, derivatives pricing and risk analytics for quantitative finance.**
 
-![Heston, Hull-White and Merton paths](assets/stochpathsim-paths.png)
+<iframe src="assets/stochpathsim-paths.html" width="100%" height="460" style="border:none"></iframe>
 
-stochPathSim simulates the stochastic processes used in equity, FX and interest-rate modelling, prices
+*Interactive: hover, zoom and toggle series.*
+
+stochPathSim simulates the stochastic processes used in equity, FX, commodity, credit and interest-rate modelling, prices
 derivatives on the simulated paths, and turns them into risk measures: exposure profiles, CVA and VaR.
 It also includes the statistical tests used to backtest risk-factor models.
 
@@ -18,10 +20,12 @@ Hull-White bond options) agree with QuantLib to 1e-10 or better.
 | `stochPathSim.analytics` | Black-Scholes, Black-76, Bachelier, Heston, Merton, SABR, bond prices and bond options |
 | `stochPathSim.pricing` | payoffs, Monte Carlo pricer, Longstaff-Schwartz, binomial tree |
 | `stochPathSim.risk` | exposure (EE, PFE, EPE, Effective EPE), CVA, VaR/ES, backtesting tests |
+| `stochPathSim.validation` | convergence and discretisation studies, model comparison, HTML validation reports |
+| `stochPathSim.viz` | interactive Plotly charts and dashboards |
 | `stochPathSim.calibration` | maximum-likelihood fits for GBM, OU/Vasicek and CIR |
 
 ```bash
-pip install "stochPathSim[plot]"
+pip install stochPathSim
 ```
 
 Continue with [Getting started](getting-started.md).
