@@ -1,2 +1,0 @@
-stochastic_models
-tests

@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use stochPathSim in your research, please cite it as below."
+title: "stochPathSim: stochastic path simulation, pricing and risk analytics for quantitative finance"
+type: software
+authors:
+  - family-names: Jha
+    given-names: Amit Kumar
+    email: jha.8@alumni.iitj.ac.in
+repository-code: "https://github.com/AIM-IT4/stochPathSim"
+license: MIT
+version: 2.0.0
+date-released: 2026-10-14
+keywords:
+  - quantitative finance
+  - Monte Carlo simulation
+  - stochastic processes
+  - derivatives pricing
+  - counterparty credit risk

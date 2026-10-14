@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "stochPathSim"
+dynamic = ["version"]
+description = "Stochastic path simulation, pricing and risk analytics for quantitative finance."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Amit Kumar Jha", email = "jha.8@alumni.iitj.ac.in" }]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=1.5",
+]
+keywords = [
+    "quantitative-finance", "monte-carlo", "stochastic-processes", "derivatives-pricing",
+    "heston", "hull-white", "interest-rate-models", "counterparty-credit-risk", "xva",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.6"]
+dev = ["pytest>=7", "pytest-cov>=4", "ruff>=0.5", "matplotlib>=3.6"]
+docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9", "mkdocstrings[python]>=0.24"]
+
+[project.urls]
+Homepage = "https://github.com/AIM-IT4/stochPathSim"
+Documentation = "https://aim-it4.github.io/stochPathSim/"
+Issues = "https://github.com/AIM-IT4/stochPathSim/issues"
+Changelog = "https://github.com/AIM-IT4/stochPathSim/blob/main/CHANGELOG.md"
+
+[tool.hatch.version]
+path = "stochPathSim/_version.py"
+
+[tool.hatch.build.targets.sdist]
+include = ["stochPathSim", "tests", "README.md", "LICENSE", "CHANGELOG.md"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["stochPathSim"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["slow: long-running Monte Carlo convergence tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY"]
+ignore = ["N802", "N803", "N806"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]

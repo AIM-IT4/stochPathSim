@@ -1,32 +1,26 @@
-import numpy as np
+"""Version 1 interface, kept for backward compatibility.
+
+Prefer :class:`stochPathSim.BlackDermanToy`.
+
+Version 1 simulated an arithmetic random walk. The rate is now lognormal, as in the
+Black-Derman-Toy model.
+"""
+
+from __future__ import annotations
+
+from ._legacy import legacy_grid
+from .processes.rates import BlackDermanToy
+
 
 class BlackDermanToyModel:
-    def __init__(self, r0, sigma, T, n, paths):
-        """
-        Initialize the Black-Derman-Toy model parameters.
-        :param r0: Initial short rate
-        :param sigma: Volatility of the short rate
-        :param T: Time horizon (in years)
-        :param n: Number of time steps
-        :param paths: Number of simulation paths
-        """
-        self.r0 = r0
-        self.sigma = sigma
-        self.T = T
-        self.n = n
-        self.paths = paths
+    """Lognormal (Black-Derman-Toy) short rate with zero drift in ``ln r``."""
+
+    def __init__(self, r0, sigma, T, n, paths, seed=None):
+        self.r0, self.sigma = r0, sigma
+        self.T, self.n, self.paths, self.seed = T, n, paths, seed
 
     def simulate(self):
-        """
-        Simulate short rate paths using the BDT model.
-        :return: Simulated short rate paths
-        """
-        dt = self.T / self.n
-        r = np.zeros((self.paths, self.n))
-        r[:, 0] = self.r0
-
-        for t in range(1, self.n):
-            dr = self.sigma * np.sqrt(dt) * np.random.normal(size=self.paths)
-            r[:, t] = r[:, t-1] + dr
-
-        return r
+        """Return short-rate paths of shape ``(paths, n)``."""
+        res = BlackDermanToy(self.r0, self.sigma).simulate(grid=legacy_grid(self.T, self.n),
+                                                           n_paths=self.paths, seed=self.seed)
+        return res["rate"]

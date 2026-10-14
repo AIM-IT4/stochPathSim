@@ -1,0 +1,61 @@
+site_name: stochPathSim
+site_description: Stochastic path simulation, pricing and risk analytics for quantitative finance
+site_url: https://aim-it4.github.io/stochPathSim/
+repo_url: https://github.com/AIM-IT4/stochPathSim
+repo_name: AIM-IT4/stochPathSim
+copyright: Copyright &copy; 2024-2026 Amit Kumar Jha
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle: {icon: material/weather-sunny, name: Light mode}
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle: {icon: material/weather-night, name: Dark mode}
+  features: [navigation.sections, navigation.top, content.code.copy, search.highlight]
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_source: false
+            show_root_heading: true
+            members_order: source
+            separate_signature: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.arithmatex: {generic: true}
+  - tables
+  - pymdownx.snippets:
+      base_path: ["."]
+      check_paths: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - User guide:
+      - Simulating processes: guide/simulation.md
+      - Pricing derivatives: guide/pricing.md
+      - Exposure and CVA: guide/exposure.md
+      - Backtesting risk-factor models: guide/backtesting.md
+  - API reference:
+      - Core: api/core.md
+      - Processes: api/processes.md
+      - Analytics: api/analytics.md
+      - Pricing: api/pricing.md
+      - Risk: api/risk.md
+      - Calibration: api/calibration.md
+  - Changelog: changelog.md

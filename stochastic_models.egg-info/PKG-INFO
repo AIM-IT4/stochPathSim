@@ -1,8 +1,0 @@
-Metadata-Version: 2.1
-Name: stochastic_models
-Version: 0.1.0
-Summary: Package for various stochastic models in finance.
-Author: Amit Kumar Jha
-Author-email: jha.8@iitj.ac.in
-Requires-Dist: numpy
-Requires-Dist: scipy

@@ -1,4 +1,0 @@
-numpy>=1.20.0
-pandas>=1.2.0
-matplotlib>=3.3.0
-plotly>=5.0.0
