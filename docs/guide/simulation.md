@@ -61,3 +61,31 @@ interactive chart to `examples/output/normal-and-nig.html`:
 ```python
 --8<-- "examples/06_normal_and_nig.py"
 ```
+
+## Displaced diffusion and CIR++
+
+Use `DisplacedDiffusion(s0, mu, sigma, shift, q=0)` for a forward whose value
+can be negative, but whose shifted value `S + shift` is positive. The
+shifted value is simulated exactly as a GBM. For a forward under its
+forward measure set `mu=q=0`, so its expectation is the input forward.
+Call `displaced_diffusion_price(F, K, T, df, sigma, shift)` to price options
+using shifted Black-76, including negative strikes; the matching
+`displaced_diffusion_greeks` gives forward delta/gamma, sigma-vega and
+theta at fixed forward and discount factor. Drift acts on `S + shift`,
+not on `S` itself.
+
+`CIRPlusPlus(x0, kappa, theta, sigma, curve)` fits any `ZeroCurve` by
+adding the deterministic difference between market and CIR instantaneous
+forwards to an exact CIR factor. It returns `rate`, `factor` and `discount`;
+the positive CIR factor does not guarantee positive shifted short rates.
+The deterministic discount correction is exact, but the factor's integrated
+discount is trapezoidal, so simulated bond prices have time-step bias.
+Refine `n_steps` when accuracy matters. `scheme='euler'` allows common
+Gaussian draws, while the default exact factor draws additional random
+variates from the seed and ignores the supplied normals.
+
+A runnable example with interactive Plotly charts:
+
+```python
+--8<-- "examples/07_displaced_and_cirpp.py"
+```

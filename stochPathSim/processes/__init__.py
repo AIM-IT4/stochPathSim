@@ -2,6 +2,8 @@
 
 from .commodity import SchwartzOneFactor, SchwartzSmith
 from .credit import CIRIntensity, ConstantIntensity
+from .cir_plus_plus import CIRPlusPlus
+from .displaced import DisplacedDiffusion
 from .equity import CEV, SABR, Bates, Heston, MertonJumpDiffusion, MultiAssetGBM, VarianceGamma
 from .gbm import GBM
 from .jumps import KouJumpDiffusion
@@ -14,6 +16,8 @@ from .rough import RoughBergomi
 
 __all__ = [
     "GBM",
+    "DisplacedDiffusion",
+    "CIRPlusPlus",
     "ArithmeticBrownianMotion",
     "NormalInverseGaussian",
     "MultiAssetGBM",

@@ -68,6 +68,7 @@ print(f"MC {mc.price:.4f} +/- {mc.stderr:.4f}   semi-analytic {exact:.4f}")
 | Arithmetic Brownian motion (normal/Bachelier) | `ArithmeticBrownianMotion` | exact, allows negative values |
 | Normal inverse Gaussian equity | `NormalInverseGaussian` | exact inverse-Gaussian clock, compensated |
 | Geometric Brownian motion | `GBM` | exact |
+| Displaced diffusion (negative forwards) | `DisplacedDiffusion` | exact shifted lognormal |
 | Correlated multi-asset GBM | `MultiAssetGBM` | exact (Cholesky) |
 | Merton jump diffusion | `MertonJumpDiffusion` | exact, compensated jumps |
 | Heston stochastic volatility | `Heston` | Andersen QE (default) or full-truncation Euler |
@@ -78,6 +79,7 @@ print(f"MC {mc.price:.4f} +/- {mc.stderr:.4f}   semi-analytic {exact:.4f}")
 | Ornstein-Uhlenbeck | `OrnsteinUhlenbeck` | exact |
 | Vasicek | `Vasicek` | exact, joint with the rate integral |
 | Cox-Ingersoll-Ross | `CIR` | exact (non-central χ²) or full-truncation Euler |
+| Curve-fitted CIR++ | `CIRPlusPlus` | exact CIR factor; trapezoidal integrated discount |
 | Hull-White, fitted to any zero curve | `HullWhite` | exact, reproduces the curve |
 | Ho-Lee, fitted to any zero curve | `HoLee` | exact, reproduces the curve |
 | G2++ two-factor Gaussian | `G2pp` | exact, reproduces the curve |
@@ -97,6 +99,7 @@ reproduce that randomness. NIG antithetic sampling pairs the Gaussian draws only
 
 ### Analytics (`stochPathSim.analytics`)
 - **Black-Scholes:** prices, Greeks and implied volatility, plus Black-76 and Bachelier (normal) prices and implied vols.
+- **Displaced Black-76:** `displaced_diffusion_price` and `displaced_diffusion_greeks` price negative forwards / strikes after a positive shift (forward measure, fixed-discount Greeks).
 - **Normal-model Greeks:** forward delta, gamma, absolute-volatility vega and frozen-discount theta via `bachelier_greeks`.
 - **NIG:** `nig_price` uses tilted NIG distribution probabilities for European calls and puts.
 - **Heston:** semi-analytic price from the characteristic function ("little Heston trap").
@@ -140,12 +143,15 @@ reproduce that randomness. NIG antithetic sampling pairs the Gaussian draws only
 | [`04_risk_factor_backtest.py`](examples/04_risk_factor_backtest.py) | Backtesting a risk-factor model with PIT, Anderson-Darling and Kupiec tests |
 | [`05_validation_report.py`](examples/05_validation_report.py) | A full Heston validation report (QE vs Euler, model comparison, backtest) as interactive HTML |
 | [`06_normal_and_nig.py`](examples/06_normal_and_nig.py) | Negative forwards, Bachelier Greeks, NIG pricing and a self-contained Plotly distribution comparison |
+| [`07_displaced_and_cirpp.py`](examples/07_displaced_and_cirpp.py) | Negative-forward shifted-lognormal pricing and CIR++ curve-fit Plotly charts |
 
 ## Validation
 
 The test suite (`pytest`, over 200 tests; runtime depends on hardware) checks, among others:
 
 - normal paths and option prices against Bachelier, and forward Greeks against finite differences;
+- displaced-forward option prices against independent shifted Black-76 and Monte Carlo, with finite-difference Greeks;
+- CIR++ factor transitions, analytic forward-shift identity, and initial-curve bond-price reproduction;
 - NIG increments against SciPy distribution moments/quantiles, spot martingale checks, and NIG option prices against Monte Carlo and direct payoff integration;
 - simulated moments and bond prices against closed forms for GBM, OU, Vasicek, CIR, Merton and variance gamma;
 - Heston and Bates Monte Carlo against the semi-analytic price, and that price against QuantLib's `AnalyticHestonEngine`;

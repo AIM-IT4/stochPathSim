@@ -9,6 +9,7 @@ from .black_scholes import (
     bs_implied_vol,
     bs_price,
 )
+from .displaced import displaced_diffusion_greeks, displaced_diffusion_price
 from .heston import heston_char_func, heston_price
 from .kou import kou_char_func, kou_price
 from .merton import merton_price
@@ -30,6 +31,8 @@ __all__ = [
     "bs_greeks",
     "bs_implied_vol",
     "black76_price",
+    "displaced_diffusion_price",
+    "displaced_diffusion_greeks",
     "bachelier_price",
     "bachelier_greeks",
     "nig_price",

@@ -5,6 +5,11 @@ All notable changes to this project are documented here. The project follows [Se
 ## [Unreleased]
 
 ### Added
+- `DisplacedDiffusion`: exact shifted-lognormal forwards including negative values; shifted Black-76
+  `displaced_diffusion_price`, forward Greeks, deterministic limits, and independent Monte Carlo tests.
+- `CIRPlusPlus`: CIR factor with analytic deterministic shift matching any input zero curve;
+  discount-path construction and MC curve-fit validation (with documented time-grid bias).
+- Standalone Plotly example for displaced forwards and CIR++ rates.
 - `ArithmeticBrownianMotion`: exact normal paths with absolute drift/volatility and support for negative values.
 - `NormalInverseGaussian`: exact exponential NIG paths with compensated drift, spot/log-return moments,
   and explicit exponential-moment domain checks.

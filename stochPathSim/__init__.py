@@ -12,6 +12,8 @@ from .curves import ZeroCurve
 from .processes import (
     CEV,
     CIR,
+    CIRPlusPlus,
+    DisplacedDiffusion,
     GBM,
     SABR,
     ArithmeticBrownianMotion,
@@ -52,6 +54,8 @@ __all__ = [
     "StochasticProcess",
     "ZeroCurve",
     "GBM",
+    "DisplacedDiffusion",
+    "CIRPlusPlus",
     "ArithmeticBrownianMotion",
     "NormalInverseGaussian",
     "MultiAssetGBM",

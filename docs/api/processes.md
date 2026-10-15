@@ -5,6 +5,7 @@
 ::: stochPathSim.processes.ArithmeticBrownianMotion
 ::: stochPathSim.processes.NormalInverseGaussian
 ::: stochPathSim.processes.GBM
+::: stochPathSim.processes.DisplacedDiffusion
 ::: stochPathSim.processes.MultiAssetGBM
 ::: stochPathSim.processes.MertonJumpDiffusion
 ::: stochPathSim.processes.Heston
@@ -31,6 +32,7 @@
 
 ::: stochPathSim.processes.Vasicek
 ::: stochPathSim.processes.CIR
+::: stochPathSim.processes.CIRPlusPlus
 ::: stochPathSim.processes.HullWhite
 ::: stochPathSim.processes.HoLee
 ::: stochPathSim.processes.G2pp
