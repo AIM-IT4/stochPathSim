@@ -89,3 +89,43 @@ A runnable example with interactive Plotly charts:
 ```python
 --8<-- "examples/07_displaced_and_cirpp.py"
 ```
+
+## Advanced stochastic models and variance reduction
+
+GARCH(1,1) and GJR-GARCH(1,1) represent volatility clustering and leverage
+effects as *per-observation* conditional variance recursions. They are
+discrete-time statistical models, not risk-neutral pricing models. Do not
+interpret them as continuous-time diffusions or compare prices across
+different numbers of time steps without recalibrating the parameters.
+
+```python
+import stochPathSim as sps
+model = sps.GJRGARCH11(100, 0.03, omega=0.002, alpha=0.05, beta=0.85, gamma=0.08)
+result = model.simulate(T=1, n_steps=252, n_paths=1024, seed=42)
+result.plot(name="variance").show()
+```
+
+`FractionalBrownianMotion` uses a Cholesky factorisation of the exact
+increment covariance for any grid; `hurst=0.5` is standard Brownian motion.
+For other Hurst exponents it is not a semimartingale: do not use it as a
+risk-neutral traded underlying. The O(n_steps^3) covariance factorisation
+is intended for grids with a few hundred observations.
+
+For Gaussian-factor Monte Carlo use scrambled Sobol quasi-random normals,
+optionally ordered by a Brownian bridge so early coordinates determine
+coarse-scale moves. Use independent scrambled replications to estimate
+QMC uncertainty; ordinary iid standard errors computed across Sobol
+points are not valid uncertainty estimates.
+
+```python
+from stochPathSim.core import sobol_normals
+z = sobol_normals(4096, 32, seed=7, brownian_bridge=True)
+paths = sps.GBM(100, 0.03, 0.2).simulate(T=1, n_steps=32, normals=z)
+paths.fan().show()
+```
+
+The source example demonstrates all the new capabilities:
+
+```python
+--8<-- "examples/08_advanced_models.py"
+```

@@ -2,6 +2,7 @@
 
 from .grid import TimeGrid
 from .process import StochasticProcess
+from .quasirandom import sobol_normals
 from .random import cholesky, make_rng, standard_normals
 from .result import SimulationResult
 
@@ -11,5 +12,6 @@ __all__ = [
     "SimulationResult",
     "make_rng",
     "standard_normals",
+    "sobol_normals",
     "cholesky",
 ]

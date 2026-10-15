@@ -65,6 +65,9 @@ print(f"MC {mc.price:.4f} +/- {mc.stderr:.4f}   semi-analytic {exact:.4f}")
 
 | Model | Class | Simulation scheme |
 | :-- | :-- | :-- |
+| Fractional Brownian motion (long-memory Gaussian paths) | `FractionalBrownianMotion` | exact finite-grid covariance |
+| GARCH(1,1) conditional volatility | `GARCH11` | per-observation variance recursion |
+| GJR-GARCH asymmetric volatility | `GJRGARCH11` | per-observation leverage recursion |
 | Arithmetic Brownian motion (normal/Bachelier) | `ArithmeticBrownianMotion` | exact, allows negative values |
 | Normal inverse Gaussian equity | `NormalInverseGaussian` | exact inverse-Gaussian clock, compensated |
 | Geometric Brownian motion | `GBM` | exact |
@@ -116,6 +119,7 @@ reproduce that randomness. NIG antithetic sampling pairs the Gaussian draws only
 ### Risk (`stochPathSim.risk`)
 - **Exposure:** EE, ENE, PFE, EPE, Effective EE/EPE (Basel), collateralised exposure with a margin period of risk, and unilateral CVA (`ExposureProfile`).
 - **VaR and Expected Shortfall:** historical, parametric and Cornish-Fisher.
+- **Normal portfolio attribution:** `normal_portfolio_risk` calculates delta-normal VaR/ES with signed marginal and Euler component contributions, and `viz.portfolio_risk_chart` plots them.
 - **Path statistics:** P-level, quantile bands and exceedance counts.
 - **Risk-factor backtesting:** PIT values, Anderson-Darling and Cramér-von Mises uniformity tests, Kupiec POF and Christoffersen independence.
 
@@ -125,6 +129,7 @@ reproduce that randomness. NIG antithetic sampling pairs the Gaussian draws only
 - `ValidationReport` builds a single self-contained HTML report with pass/fail badges. See [`05_validation_report.py`](examples/05_validation_report.py).
 
 ### Interactive charts (`stochPathSim.viz`)
+- **Quasi-Monte Carlo:** `stochPathSim.core.sobol_normals` generates scrambled Sobol normals, antithetic pairs, correlated factors and optional Brownian-bridge ordering; pass into any compatible `simulate(normals=...)` API.
 - **Paths:** `paths`, `fan`, `path_explorer` (choose the state and the number of paths), `terminal_distribution` with an optional analytic density overlay, `density_evolution` (heatmap, 3D surface or animation) and `correlation_heatmap`.
 - **Risk:** `exposure_dashboard`, `backtest_dashboard` (PIT histogram, QQ plot and exceedance timeline) and `var_plot`.
 - **Rates:** `curve_fit_check` and `short_rate_fan`.
@@ -144,11 +149,14 @@ reproduce that randomness. NIG antithetic sampling pairs the Gaussian draws only
 | [`05_validation_report.py`](examples/05_validation_report.py) | A full Heston validation report (QE vs Euler, model comparison, backtest) as interactive HTML |
 | [`06_normal_and_nig.py`](examples/06_normal_and_nig.py) | Negative forwards, Bachelier Greeks, NIG pricing and a self-contained Plotly distribution comparison |
 | [`07_displaced_and_cirpp.py`](examples/07_displaced_and_cirpp.py) | Negative-forward shifted-lognormal pricing and CIR++ curve-fit Plotly charts |
+| [`08_advanced_models.py`](examples/08_advanced_models.py) | GARCH/GJR volatility clustering, fractional Brownian motion, Sobol QMC and interactive portfolio risk attribution |
 
 ## Validation
 
 The test suite (`pytest`, over 200 tests; runtime depends on hardware) checks, among others:
 
+- GARCH and GJR-GARCH recursions and expected variance; fBM Gaussian covariance and standard-Brownian limit;
+- Sobol scrambled-normal covariance and Brownian-bridge laws; portfolio Euler VaR/ES and finite-difference marginals;
 - normal paths and option prices against Bachelier, and forward Greeks against finite differences;
 - displaced-forward option prices against independent shifted Black-76 and Monte Carlo, with finite-difference Greeks;
 - CIR++ factor transitions, analytic forward-shift identity, and initial-curve bond-price reproduction;

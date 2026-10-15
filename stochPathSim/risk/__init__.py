@@ -1,5 +1,6 @@
 """Risk analytics: path statistics, exposure, VaR and backtesting."""
 
+from .attribution import PortfolioRisk, normal_portfolio_risk
 from .backtest import (
     anderson_darling_uniform,
     christoffersen_independence,
@@ -35,6 +36,8 @@ __all__ = [
     "ExposureProfile",
     "var_es",
     "monte_carlo_var",
+    "normal_portfolio_risk",
+    "PortfolioRisk",
     "kupiec_pof",
     "christoffersen_independence",
     "pit_values",

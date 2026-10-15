@@ -21,3 +21,11 @@ viz.density_evolution(res, kind="surface")  # 3D surface of the density over tim
 
 Risk charts take the objects produced by `stochPathSim.risk`: `exposure_dashboard(profile)`,
 `backtest_dashboard(pit, ...)` and `var_plot(pnl)`.
+
+Normal portfolio component VaR and ES can be displayed with `viz.portfolio_risk_chart`:
+
+```python
+from stochPathSim.risk import normal_portfolio_risk
+risk = normal_portfolio_risk([1.0, 0.5], [[0.04, 0.01], [0.01, 0.09]])
+viz.portfolio_risk_chart(risk, labels=["Equity", "Rates"]).show()
+```

@@ -5,6 +5,11 @@ All notable changes to this project are documented here. The project follows [Se
 ## [Unreleased]
 
 ### Added
+- `GARCH11` and `GJRGARCH11`: variance-clustering and asymmetric leverage with tested discrete-time recursions.
+- `FractionalBrownianMotion`: exact finite-grid fractional Gaussian noise, including irregular grids.
+- `core.sobol_normals`: scrambled Sobol quasi-random factors with correlation and Brownian-bridge ordering.
+- `risk.normal_portfolio_risk`: normal VaR/ES, marginal risk, Euler component allocations.
+- Plotly `viz.portfolio_risk_chart`, standalone advanced-model example and independent statistical tests.
 - `DisplacedDiffusion`: exact shifted-lognormal forwards including negative values; shifted Black-76
   `displaced_diffusion_price`, forward Greeks, deterministic limits, and independent Monte Carlo tests.
 - `CIRPlusPlus`: CIR factor with analytic deterministic shift matching any input zero curve;
