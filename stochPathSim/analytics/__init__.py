@@ -1,6 +1,7 @@
 """Closed-form and semi-analytic pricing formulas."""
 
 from .black_scholes import (
+    bachelier_greeks,
     bachelier_implied_vol,
     bachelier_price,
     black76_price,
@@ -11,6 +12,7 @@ from .black_scholes import (
 from .heston import heston_char_func, heston_price
 from .kou import kou_char_func, kou_price
 from .merton import merton_price
+from .nig import nig_price
 from .rates import (
     cir_zcb,
     g2pp_integral_variance,
@@ -29,6 +31,8 @@ __all__ = [
     "bs_implied_vol",
     "black76_price",
     "bachelier_price",
+    "bachelier_greeks",
+    "nig_price",
     "bachelier_implied_vol",
     "heston_price",
     "heston_char_func",

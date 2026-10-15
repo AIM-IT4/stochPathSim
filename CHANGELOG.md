@@ -2,6 +2,16 @@
 
 All notable changes to this project are documented here. The project follows [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+
+### Added
+- `ArithmeticBrownianMotion`: exact normal paths with absolute drift/volatility and support for negative values.
+- `NormalInverseGaussian`: exact exponential NIG paths with compensated drift, spot/log-return moments,
+  and explicit exponential-moment domain checks.
+- `nig_price`: European calls/puts using original and exponentially tilted NIG probabilities.
+- `bachelier_greeks`: vectorised forward delta, gamma, vega and theta with a documented fixed-discount convention.
+- Normal/NIG example with a self-contained interactive Plotly chart, independent-reference tests and usage guidance.
+
 ## [2.1.0] - 2026-10-14
 
 ### Added

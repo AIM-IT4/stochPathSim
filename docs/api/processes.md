@@ -2,6 +2,8 @@
 
 ## Equity, FX and generic
 
+::: stochPathSim.processes.ArithmeticBrownianMotion
+::: stochPathSim.processes.NormalInverseGaussian
 ::: stochPathSim.processes.GBM
 ::: stochPathSim.processes.MultiAssetGBM
 ::: stochPathSim.processes.MertonJumpDiffusion

@@ -140,3 +140,35 @@ def bachelier_implied_vol(price, F, K, T, df, option_type: str = "call"):
         out[idx] = _implied(lambda v, f=f, k=k, t=t, d=d: bachelier_price(f, k, t, d, v, option_type),
                             p, lower, np.inf, lo=1e-12, hi=hi)
     return _scalar_or_array(out)
+
+
+def bachelier_greeks(F, K, T, df, sigma_n, option_type: str = "call") -> dict:
+    """Normal-model forward ``delta``, ``gamma``, ``vega`` and ``theta``.
+
+    Accepts broadcastable arrays, including negative forwards and strikes.
+    Delta/gamma differentiate with respect to the forward, vega is per unit
+    of absolute normal volatility, and theta is minus the expiry derivative
+    with forward and discount factor held fixed (per year). It excludes
+    discount-factor carry and is not a spot-price theta.
+
+    Requires finite inputs, positive T, df and sigma_n. At expiry or zero
+    volatility the smooth Greeks are not defined by this function.
+    """
+    w = _sign(option_type)
+    F, K, T, df, sigma_n = np.broadcast_arrays(
+        *(np.asarray(x, dtype=float) for x in (F, K, T, df, sigma_n)))
+    if any(np.any(~np.isfinite(x)) for x in (F, K, T, df, sigma_n)):
+        raise ValueError("all inputs must be finite")
+    if np.any(T <= 0) or np.any(df <= 0) or np.any(sigma_n <= 0):
+        raise ValueError("greeks need T > 0, df > 0 and sigma_n > 0")
+    sq = np.sqrt(T)
+    sd = sigma_n * sq
+    d = (F - K) / sd
+    density = norm.pdf(d)
+    values = dict(
+        delta=df * w * norm.cdf(w * d),
+        gamma=df * density / sd,
+        vega=df * sq * density,
+        theta=-df * sigma_n * density / (2 * sq),
+    )
+    return {name: _scalar_or_array(value) for name, value in values.items()}

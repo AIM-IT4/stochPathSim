@@ -65,6 +65,8 @@ print(f"MC {mc.price:.4f} +/- {mc.stderr:.4f}   semi-analytic {exact:.4f}")
 
 | Model | Class | Simulation scheme |
 | :-- | :-- | :-- |
+| Arithmetic Brownian motion (normal/Bachelier) | `ArithmeticBrownianMotion` | exact, allows negative values |
+| Normal inverse Gaussian equity | `NormalInverseGaussian` | exact inverse-Gaussian clock, compensated |
 | Geometric Brownian motion | `GBM` | exact |
 | Correlated multi-asset GBM | `MultiAssetGBM` | exact (Cholesky) |
 | Merton jump diffusion | `MertonJumpDiffusion` | exact, compensated jumps |
@@ -89,10 +91,14 @@ print(f"MC {mc.price:.4f} +/- {mc.stderr:.4f}   semi-analytic {exact:.4f}")
 | Credit intensity (constant, CIR) | `ConstantIntensity`, `CIRIntensity` | exact, with default-time sampling |
 
 Short-rate models also return the **pathwise discount factor** `exp(-∫r dt)`. All processes support
-seeds, antithetic variates, custom non-uniform time grids and common random numbers (`normals=`).
+seeds, antithetic variates and custom non-uniform time grids. Common Gaussian draws can be supplied
+with `normals=`; models with additional randomness (such as NIG clocks) also need the same seed to
+reproduce that randomness. NIG antithetic sampling pairs the Gaussian draws only.
 
 ### Analytics (`stochPathSim.analytics`)
 - **Black-Scholes:** prices, Greeks and implied volatility, plus Black-76 and Bachelier (normal) prices and implied vols.
+- **Normal-model Greeks:** forward delta, gamma, absolute-volatility vega and frozen-discount theta via `bachelier_greeks`.
+- **NIG:** `nig_price` uses tilted NIG distribution probabilities for European calls and puts.
 - **Heston:** semi-analytic price from the characteristic function ("little Heston trap").
 - **Merton and Kou:** jump-diffusion prices (a series for Merton, Fourier inversion for Kou).
 - **SABR:** Hagan implied volatility, including the shifted variant.
@@ -133,11 +139,14 @@ seeds, antithetic variates, custom non-uniform time grids and common random numb
 | [`03_exposure_profile.py`](examples/03_exposure_profile.py) | FX forward exposure: EE, PFE, effective EE, collateral and CVA |
 | [`04_risk_factor_backtest.py`](examples/04_risk_factor_backtest.py) | Backtesting a risk-factor model with PIT, Anderson-Darling and Kupiec tests |
 | [`05_validation_report.py`](examples/05_validation_report.py) | A full Heston validation report (QE vs Euler, model comparison, backtest) as interactive HTML |
+| [`06_normal_and_nig.py`](examples/06_normal_and_nig.py) | Negative forwards, Bachelier Greeks, NIG pricing and a self-contained Plotly distribution comparison |
 
 ## Validation
 
-The test suite (`pytest`, about 180 tests, under 30 seconds) checks, among others:
+The test suite (`pytest`, over 200 tests; runtime depends on hardware) checks, among others:
 
+- normal paths and option prices against Bachelier, and forward Greeks against finite differences;
+- NIG increments against SciPy distribution moments/quantiles, spot martingale checks, and NIG option prices against Monte Carlo and direct payoff integration;
 - simulated moments and bond prices against closed forms for GBM, OU, Vasicek, CIR, Merton and variance gamma;
 - Heston and Bates Monte Carlo against the semi-analytic price, and that price against QuantLib's `AnalyticHestonEngine`;
 - Hull-White, Ho-Lee and G2++ reproducing an upward-sloping zero curve, and Hull-White bond options and caplets against QuantLib;
