@@ -1,8 +1,8 @@
 """Stochastic processes for equities, rates and generic factors."""
 
+from .cir_plus_plus import CIRPlusPlus
 from .commodity import SchwartzOneFactor, SchwartzSmith
 from .credit import CIRIntensity, ConstantIntensity
-from .cir_plus_plus import CIRPlusPlus
 from .displaced import DisplacedDiffusion
 from .equity import CEV, SABR, Bates, Heston, MertonJumpDiffusion, MultiAssetGBM, VarianceGamma
 from .gbm import GBM

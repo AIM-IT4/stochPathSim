@@ -72,8 +72,8 @@ def test_displaced_closed_form_deterministic_and_strike_below_lower_bound():
 def test_displaced_greeks_finite_differences(kind):
     f, k, t, df, vol, shift = -0.01, -0.005, 1.3, 0.97, 0.3, 0.08
     h = 1e-5
-    price = lambda x=f, T=t, v=vol: displaced_diffusion_price(
-        x, k, T, df, v, shift, kind)
+    def price(x=f, T=t, v=vol):
+        return displaced_diffusion_price(x, k, T, df, v, shift, kind)
     g = displaced_diffusion_greeks(f, k, t, df, vol, shift, kind)
     assert g["delta"] == pytest.approx((price(x=f+h)-price(x=f-h))/(2*h), rel=1e-7)
     assert g["gamma"] == pytest.approx((price(x=f+h)-2*price()+price(x=f-h))/h**2, rel=3e-4)
@@ -135,11 +135,11 @@ def test_cirpp_exact_factor_transition_and_discount_decomposition():
 def test_cirpp_shift_uses_analytic_cir_forward_not_numerical_approximation():
     kappa, theta, sigma, x0 = 1.7, 0.025, 0.12, 0.04
     model = sps.CIRPlusPlus(x0, kappa, theta, sigma, curve=0.035)
-    for t in [0.0, 0.3, 1.2, 4.0]:
+    assert model.cir_forward_rate(0) == pytest.approx(x0, abs=1e-14)
+    for t in [0.3, 1.2, 4.0]:
         h = 1e-5
         fd = -(np.log(cir_zcb(x0, 0, t+h, kappa, theta, sigma))
-               - np.log(cir_zcb(x0, 0, max(0, t-h), kappa, theta, sigma))) / (
-                   t+h - max(0, t-h))
+               - np.log(cir_zcb(x0, 0, t-h, kappa, theta, sigma))) / (2*h)
         assert model.cir_forward_rate(t) == pytest.approx(fd, abs=1e-9)
 
 

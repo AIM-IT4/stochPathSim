@@ -12,8 +12,6 @@ from .curves import ZeroCurve
 from .processes import (
     CEV,
     CIR,
-    CIRPlusPlus,
-    DisplacedDiffusion,
     GBM,
     SABR,
     ArithmeticBrownianMotion,
@@ -21,7 +19,9 @@ from .processes import (
     BlackDermanToy,
     BlackKarasinski,
     CIRIntensity,
+    CIRPlusPlus,
     ConstantIntensity,
+    DisplacedDiffusion,
     G2pp,
     Heston,
     HoLee,
